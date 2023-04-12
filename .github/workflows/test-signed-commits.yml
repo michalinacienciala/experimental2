@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
-        run: echo "Hello" > hello1.txt
+        run: echo "Hello" > hello2.txt
 
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v5
@@ -35,7 +35,7 @@ jobs:
           cd dest-repo-clone
           mkdir -p ./docs/app-development/api-docs/tbtc-v2
           rsync -avh \
-            ../hello.txt \
+            ../hello2.txt \
             ./docs/app-development/api-docs/tbtc-v2
           git add -A
           if git status | grep -q "Changes to be committed"
