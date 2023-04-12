@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
-        run: echo "Hello" > hello.txt
+        run: echo "Hello" > hello1.txt
 
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v5
@@ -40,7 +40,7 @@ jobs:
           git add -A
           if git status | grep -q "Changes to be committed"
           then
-            git commit -m "Update docs"
+            git commit -S -m "Update docs"
             echo "Pushing git commit"
             git push --set-upstream origin HEAD:test-contracts-documentation
           else
