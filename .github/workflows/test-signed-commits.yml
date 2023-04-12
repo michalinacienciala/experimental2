@@ -1,0 +1,44 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test signing commits
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo "Hello" > hello.txt
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIV_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Sync generated docs with the specified repository
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TEST_DOCS_GITHUB_TOKEN }}
+        run: |
+          git clone --single-branch --branch test-contracts-documentation \
+            https://x-access-token:$API_TOKEN_GITHUB@github.com/michalinacienciala/experimental.git \
+            dest-repo-clone
+          cd dest-repo-clone
+          mkdir -p ./docs/app-development/api-docs/tbtc-v2
+          rsync -avh \
+            ../hello.txt \
+            ./docs/app-development/api-docs/tbtc-v2
+          git add -A
+          if git status | grep -q "Changes to be committed"
+          then
+            git commit -m "Update docs"
+            echo "Pushing git commit"
+            git push --set-upstream origin HEAD:test-contracts-documentation
+          else
+            echo "No changes detected"
+          fi
