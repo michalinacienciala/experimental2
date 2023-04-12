@@ -20,13 +20,15 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIV_KEY }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-          git_committer_name: michalinacienciala
-          git_committer_emil: michalina.cienciala@akena.co
+          # git_committer_name: michalinacienciala
+          # git_committer_emil: michalina.cienciala@akena.co
 
       - name: Sync generated docs with the specified repository
         env:
           API_TOKEN_GITHUB: ${{ secrets.TEST_DOCS_GITHUB_TOKEN }}
         run: |
+          git config --global user.email "michalina.cienciala@akena.co"
+          git config --global user.name "michalinacienciala"
           git clone --single-branch --branch test-contracts-documentation \
             https://x-access-token:$API_TOKEN_GITHUB@github.com/michalinacienciala/experimental.git \
             dest-repo-clone
