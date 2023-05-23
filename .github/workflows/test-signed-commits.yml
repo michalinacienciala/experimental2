@@ -36,7 +36,7 @@ jobs:
           cd dest-repo-clone
           mkdir -p ./docs/app-development/api-docs/tbtc-v2
           rsync -avh \
-            ../hello2.txt \
+            ../hello3.txt \
             ./docs/app-development/api-docs/tbtc-v2
           git add -A
           if git status | grep -q "Changes to be committed"
