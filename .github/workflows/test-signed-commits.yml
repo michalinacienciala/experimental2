@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
-        run: echo "Hello" > hello3.txt
+        run: echo "Hello" > hello4.txt
 
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v5
@@ -31,12 +31,12 @@ jobs:
           git config --global user.email "michalina.cienciala@akena.co"
           git config --global user.name "Michalina Cienciala"
           git clone --single-branch --branch test-contracts-documentation \
-            https://x-access-token:$API_TOKEN_GITHUB@github.com/michalinacienciala/experimental.git \
+            https://x-access-token:$API_TOKEN_GITHUB@github.com/threshold-network/threshold.git \
             dest-repo-clone
           cd dest-repo-clone
           mkdir -p ./docs/app-development/api-docs/tbtc-v2
           rsync -avh \
-            ../hello3.txt \
+            ../hello4.txt \
             ./docs/app-development/api-docs/tbtc-v2
           git add -A
           if git status | grep -q "Changes to be committed"
